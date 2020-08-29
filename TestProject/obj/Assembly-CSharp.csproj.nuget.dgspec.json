@@ -1,0 +1,49 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Project\\Unity\\TestProject\\TestProject\\Assembly-CSharp.csproj": {}
+  },
+  "projects": {
+    "C:\\Project\\Unity\\TestProject\\TestProject\\Assembly-CSharp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Project\\Unity\\TestProject\\TestProject\\Assembly-CSharp.csproj",
+        "projectName": "Assembly-CSharp",
+        "projectPath": "C:\\Project\\Unity\\TestProject\\TestProject\\Assembly-CSharp.csproj",
+        "packagesPath": "C:\\Users\\a.vyushkov\\.nuget\\packages\\",
+        "outputPath": "C:\\Project\\Unity\\TestProject\\TestProject\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "configFilePaths": [
+          "C:\\Users\\a.vyushkov\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net471"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://registry.qiwi.com/repository/nuget-internal": {}
+        },
+        "frameworks": {
+          "net471": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net471": {}
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

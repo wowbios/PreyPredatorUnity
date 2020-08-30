@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Object = System.Object;
 
 namespace Assets.Scripts.Creatures
 {
@@ -8,10 +7,17 @@ namespace Assets.Scripts.Creatures
     {
         public CarnivoreState State = CarnivoreState.Searching;
         public GameObject RadiusSprite;
-        private GameObject _victim;
+        public float CarnivoreChangeStrategySeconds = 2;
+
+        private CarnivoreHuntStrategy _huntStrategy;
+        [SerializeField]
+        private CarnivoreSearchStrategy _searchStrategy;
 
         public override void Start()
         {
+            _huntStrategy = new CarnivoreHuntStrategy();
+            _searchStrategy = new CarnivoreSearchStrategy(CarnivoreChangeStrategySeconds);
+
             base.Start();
 
             RescaleRadiusSprite();
@@ -26,48 +32,24 @@ namespace Assets.Scripts.Creatures
 
         public void FixedUpdate()
         {
+            GetStrategy()?.Apply(this);
+        }
+
+        private IStrategy<CarnivoreBehavior> GetStrategy()
+        {
             switch (State)
             {
-                case CarnivoreState.Searching: SearchForEnemy(); break;
-                case CarnivoreState.Chasing: Chase(); break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                case CarnivoreState.Searching: return _searchStrategy;
+                case CarnivoreState.Chasing: return _huntStrategy;
+                default: throw new ArgumentOutOfRangeException();
             }
-
         }
 
         public void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.CompareTag("Herbivore"))
-            {
-                Destroy(collision.gameObject);
-                ChangeState(CarnivoreState.Searching);
-            }
+            if (collision.gameObject.CompareTag("Herbivore")) Destroy(collision.gameObject);
         }
 
-        private GameObject FindClosestVictim() => FindClosest("Herbivore");
-
-        private void SearchForEnemy()
-        {
-            Search();
-
-            _victim = FindClosestVictim();
-
-            if (_victim != null) ChangeState(CarnivoreState.Chasing);
-        }
-
-        private void Chase()
-        {
-            if (Vector2.Distance(transform.position, _victim.transform.position) > VisionRadius)
-            {
-                _victim = null;
-                ChangeState(CarnivoreState.Searching);
-                return;
-            }
-
-            MoveTo(_victim.transform);
-        }
-
-        private void ChangeState(CarnivoreState state) => State = state;
+        public void ChangeState(CarnivoreState state) => State = state;
     }
 }

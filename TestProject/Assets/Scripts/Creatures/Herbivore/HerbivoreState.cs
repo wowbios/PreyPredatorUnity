@@ -3,6 +3,8 @@
     public enum HerbivoreState
     {
         Searching = 1,
-        Running
+        Running,
+        GoForEat,
+        // Eat
     }
 }

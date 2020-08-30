@@ -6,43 +6,46 @@ namespace Assets.Scripts.Creatures
     public class HerbivoreBehavior : CreatureBehavior
     {
         public HerbivoreState State = HerbivoreState.Searching;
+        public float HerbivoreChangeStrategySeconds = 2;
 
-        private GameObject _enemy;
+        private HerbivoreRunStrategy _runStrategy;
+        private HerbivoreSearchStrategy _searchStrategy;
+        private HerbivoreGoForEatStrategy _goForEatStrategy;
+
+        public override void Start()
+        {
+            _runStrategy = new HerbivoreRunStrategy();
+            _searchStrategy = new HerbivoreSearchStrategy(HerbivoreChangeStrategySeconds);
+            _goForEatStrategy = new HerbivoreGoForEatStrategy();
+
+            base.Start();
+        }
 
         public void FixedUpdate()
         {
+            GetStrategy()?.Apply(this);
+        }
+
+        private IStrategy<HerbivoreBehavior> GetStrategy()
+        {
             switch (State)
             {
-                case HerbivoreState.Searching: SearchForEat(); break;
-                case HerbivoreState.Running: RunFromEnemy(); break;
+                case HerbivoreState.Running:
+                    return _runStrategy;
+                case HerbivoreState.Searching:
+                    return _searchStrategy;
+                case HerbivoreState.GoForEat:
+                    return _goForEatStrategy;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void RunFromEnemy()
+        public void OnCollisionEnter2D(Collision2D collision)
         {
-            if (Vector2.Distance(transform.position, _enemy.transform.position) > VisionRadius)
-            {
-                _enemy = null;
-                ChangeState(HerbivoreState.Searching);
-                return;
-            }
-
-            MoveFrom(_enemy.transform);
+            if (collision.gameObject.CompareTag("Food")) Destroy(collision.gameObject);
         }
 
-        private GameObject FindClosestEnemy() => FindClosest("Carnivore");
-
-        private void SearchForEat()
-        {
-            Search();
-
-            _enemy = FindClosestEnemy();
-
-            if (_enemy != null) ChangeState(HerbivoreState.Running);
-        }
-
-        private void ChangeState(HerbivoreState state) => State = state;
+        public void ChangeState(HerbivoreState state) => State = state;
     }
 }

@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Assets.Scripts.Creatures
+﻿namespace Assets.Scripts.Creatures
 {
     public class HerbivoreSearchStrategy : SearchStrategy
     {
@@ -12,20 +10,20 @@ namespace Assets.Scripts.Creatures
         {
             if (creature is HerbivoreBehavior herbivore)
             {
-                if (HerbivoreRunStrategy.FindClosestEnemy(herbivore) != null)
+                if (herbivore.FindClosest(EntityType.Carnivore) != null)
                 {
                     herbivore.ChangeState(HerbivoreState.Running);
+                    return;
                 }
-                else if (FindClosestFood(herbivore) != null)
+
+                if (herbivore.FindClosest(EntityType.Food) != null)
                 {
                     herbivore.ChangeState(HerbivoreState.GoForEat);
+                    return;
                 }
             }
 
             base.Apply(creature);
         }
-
-        public static GameObject FindClosestFood(HerbivoreBehavior herbivore)
-            => herbivore.FindClosest("Food");
     }
 }

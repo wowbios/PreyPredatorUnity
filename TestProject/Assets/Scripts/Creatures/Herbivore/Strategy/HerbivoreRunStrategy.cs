@@ -4,14 +4,13 @@ namespace Assets.Scripts.Creatures
 {
     public class HerbivoreRunStrategy : IStrategy<HerbivoreBehavior>
     {
-        public void Apply(HerbivoreBehavior creature)
+        public void Apply(HerbivoreBehavior herbivore)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public static GameObject FindClosestEnemy(HerbivoreBehavior herbivore)
-        {
-
+            GameObject enemy = herbivore.FindClosest(EntityType.Carnivore);
+            if (enemy is null)
+                herbivore.ChangeState(HerbivoreState.Searching);
+            else
+                herbivore.MoveFrom(enemy);
         }
     }
 }

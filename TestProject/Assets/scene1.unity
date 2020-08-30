@@ -211,10 +211,10 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 19.2, y: 10.8}
+    newSize: {x: 19.2, y: 19.2}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
@@ -264,7 +264,7 @@ Transform:
   m_GameObject: {fileID: 1884984663}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -10.73, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_Children: []
   m_Father: {fileID: 1774145108}
   m_RootOrder: 2
@@ -285,10 +285,10 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 19.2, y: 10.8}
+    newSize: {x: 19.2, y: 19.2}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
@@ -348,7 +348,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.171222
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -464,12 +464,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 041d3dbdf8319b64789fadda09020a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animals:
-  - Prefab: {fileID: 4732535772932969701, guid: 13821aa18b732064584e0a7f4a37baf6,
+  Spawners:
+  - Entity: {fileID: 4732535772932969701, guid: 13821aa18b732064584e0a7f4a37baf6,
       type: 3}
-    Count: 1
-  - Prefab: {fileID: 179219349311033980, guid: a1db5fc43046af9458c75d3e166d3f00, type: 3}
-    Count: 10
+    Count: 2
+    OnInit: 1
+    OnTick: 0
+    SpawnMilliseconds: 0
+  - Entity: {fileID: 179219349311033980, guid: a1db5fc43046af9458c75d3e166d3f00, type: 3}
+    Count: 5
+    OnInit: 1
+    OnTick: 0
+    SpawnMilliseconds: 0
+  - Entity: {fileID: 8467583877715578026, guid: 96d8ce62b7e08a4429773192ece06341,
+      type: 3}
+    Count: 3
+    OnInit: 0
+    OnTick: 1
+    SpawnMilliseconds: 2000
   XMin: -10
   XMax: 10
   YMin: -5

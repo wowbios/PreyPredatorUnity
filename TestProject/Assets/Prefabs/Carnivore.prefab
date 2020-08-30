@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4732535772932969701}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.71, y: 0.29, z: 7.42}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8062, y: 0.8062, z: 0}
   m_Children:
   - {fileID: 2462984866220658970}
@@ -134,11 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410890da60b02c74c8bcdfd2c75abf4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 5
-  VisionRadius: 4.42
-  ChangeStrategyIntervalSeconds: 2
+  Speed: 2
+  VisionRadius: 4
   State: 1
   RadiusSprite: {fileID: 6020613415251802984}
+  CarnivoreChangeStrategySeconds: 2
 --- !u!1 &6020613415251802984
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +210,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 43e2e0d669937a643ae6bed91e29c3ca, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.019607844}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

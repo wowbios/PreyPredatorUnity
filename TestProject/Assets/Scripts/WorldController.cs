@@ -1,34 +1,59 @@
-﻿using Assets.Scripts;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts;
 using UnityEngine;
 using Random = System.Random;
 
 public class WorldController : MonoBehaviour
 {
-    public AnimalsSettings[] Animals;
+    public SpawnerSettings[] Spawners;
     public int XMin, XMax, YMin, YMax;
 
     public static WorldController Instance;
 
     public readonly Random Rand = new Random();
+    private List<SpawnerSettings> _initSpawners;
+    private List<SpawnerSettings> _tickSpawners;
+    private DateTime[] _ticks;
 
-    // Start is called before the first frame update
     void Start()
     {
         Instance = this;
-        SpawnAnimals();
+        _initSpawners = Spawners.Where(x => x.OnInit).ToList();
+        _tickSpawners = Spawners.Where(x => x.OnTick).ToList();
+        _ticks = Enumerable.Repeat(DateTime.Now, _tickSpawners.Count).ToArray();
+
+        SpawnOnInit();
     }
 
-    private void SpawnAnimals()
+    void Update()
     {
-        foreach (AnimalsSettings animalsSettingse in Animals) SpawnAnimals(animalsSettingse);
+        SpawnOnTick();
     }
 
-    private void SpawnAnimals(AnimalsSettings settings)
+    private void SpawnOnInit()
     {
-        for (var i = 0; i < settings.Count; i++) SpawnAnimal(settings.Prefab);
+        foreach(SpawnerSettings spawner in _initSpawners)
+            for (var i = 0; i < spawner.Count; i++)
+                Spawn(spawner.Entity);
     }
 
-    private void SpawnAnimal(GameObject prefab) => Instantiate(prefab, GetRandomPosition(), Quaternion.identity);
+    private void SpawnOnTick()
+    {
+        var now = DateTime.Now;
+        for (var i = 0; i < _tickSpawners.Count; i++)
+        {
+            SpawnerSettings tickSpawner = _tickSpawners[i];
+            if ((now - _ticks[i]).TotalMilliseconds > tickSpawner.SpawnMilliseconds)
+            {
+                _ticks[i] = now;
+                Spawn(tickSpawner.Entity);
+            }
+        }
+    }
+
+    private void Spawn(GameObject prefab) => Instantiate(prefab, GetRandomPosition(), Quaternion.identity);
 
     public Vector2 GetRandomPosition()
     {

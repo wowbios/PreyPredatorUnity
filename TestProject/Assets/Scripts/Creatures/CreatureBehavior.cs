@@ -7,66 +7,58 @@ namespace Assets.Scripts.Creatures
     {
         public float Speed = .1f;
         public float VisionRadius = 2f;
-        public float ChangeStrategyIntervalSeconds = 2;
-
-        private DateTime _lastChangeStrategyTime;
-        private Vector2 _searchingDirection;
-        private Rigidbody2D _rigidbody;
 
         public virtual void Start()
         {
-            _rigidbody = GetComponent<Rigidbody2D>() ?? throw new Exception("Rigidbody2D required");
-            _lastChangeStrategyTime = DateTime.Now;
-            _searchingDirection = GetNewSearchingDirection();
         }
 
-        protected void Search()
+        public GameObject FindClosest(EntityType type)
         {
-            if ((DateTime.Now - _lastChangeStrategyTime).Seconds > ChangeStrategyIntervalSeconds)
-            {
-                _lastChangeStrategyTime = DateTime.Now;
-                _searchingDirection = GetNewSearchingDirection();
-            }
-
-            transform.position = Vector2.MoveTowards(transform.position, _searchingDirection, Speed * Time.deltaTime);
-            RotateToTarget(_searchingDirection);
-        }
-
-        protected GameObject FindClosest(string targetTag)
-        {
-            GameObject[] victims = GameObject.FindGameObjectsWithTag(targetTag);
-            GameObject closest = null;
+            string targetTag = GetTagByEntityType(type);
+            GameObject[] entities = GameObject.FindGameObjectsWithTag(targetTag);
+            GameObject closestEntity = null;
             float minDist = Mathf.Infinity;
             Vector3 currentPos = transform.position;
-            foreach (GameObject creature in victims)
+            foreach (GameObject entity in entities)
             {
-                float distance = Vector3.Distance(creature.transform.position, currentPos);
+                float distance = Vector3.Distance(entity.transform.position, currentPos);
                 if (distance < minDist && distance <= VisionRadius)
                 {
-                    closest = creature;
+                    closestEntity = entity;
                     minDist = distance;
                 }
             }
 
-            return closest;
+            if (minDist > VisionRadius)
+                return null;
+
+            return closestEntity;
         }
 
-        protected void MoveTo(Transform targetTransform)
+        private string GetTagByEntityType(EntityType type) => type.ToString();
+
+        public void Move(Vector2 targetPos, float speedModifier = 1)
         {
             transform.position = Vector2.MoveTowards(
                 transform.position,
-                targetTransform.position,
-                Speed * Time.deltaTime);
-            RotateToTarget(targetTransform.position);
+                targetPos,
+                Speed * Time.deltaTime * speedModifier);
         }
 
-        protected void MoveFrom(Transform targetTransform)
+        public void MoveTo(Vector2 targetPosition)
         {
-            transform.position = Vector2.MoveTowards(
-                transform.position,
-                targetTransform.position,
-                -Speed * Time.deltaTime);
-            RotateFromTarget(targetTransform.position);
+            Move(targetPosition);
+            RotateToTarget(targetPosition);
+        }
+
+        public void MoveTo(GameObject target) => MoveTo(target.transform.position);
+
+        public void MoveFrom(GameObject target) => MoveFrom(target.transform.position);
+
+        private void MoveFrom(Vector2 targetPosition)
+        {
+            Move(targetPosition, -1);
+            RotateFromTarget(targetPosition);
         }
 
         private void RotateToTarget(Vector2 target)=> RotateTo(target, 270f);
@@ -80,7 +72,5 @@ namespace Assets.Scripts.Creatures
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
         }
-
-        private static Vector2 GetNewSearchingDirection() => WorldController.Instance.GetRandomPosition();
     }
 }

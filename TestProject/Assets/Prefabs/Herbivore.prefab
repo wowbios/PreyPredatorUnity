@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f4183756dfcc324e900a21dbcf08016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 0.2
-  VisionRadius: 2
-  ChangeStrategyIntervalSeconds: 2
+  Speed: 1
+  VisionRadius: 5
   State: 1
+  HerbivoreChangeStrategySeconds: 2

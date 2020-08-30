@@ -1,5 +1,8 @@
-﻿namespace Assets.Scripts.Creatures
+﻿using System;
+
+namespace Assets.Scripts.Creatures
 {
+    [Serializable]
     public class CarnivoreSearchStrategy : SearchStrategy
     {
         public CarnivoreSearchStrategy(float changeInterval) : base(changeInterval)
@@ -11,7 +14,7 @@
         {
             if (creature is CarnivoreBehavior carnivore)
             {
-                if (CarnivoreHuntStrategy.FindClosestHerbivore(carnivore) != null)
+                if (carnivore.FindClosest(EntityType.Herbivore) != null)
                 {
                     carnivore.ChangeState(CarnivoreState.Chasing);
                     return;

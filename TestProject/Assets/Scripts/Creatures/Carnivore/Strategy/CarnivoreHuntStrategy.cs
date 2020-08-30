@@ -6,22 +6,13 @@ namespace Assets.Scripts.Creatures
     {
         public void Apply(CarnivoreBehavior creature)
         {
-            GameObject victim = FindClosestHerbivore(creature);
+            GameObject victim = creature.FindClosest(EntityType.Herbivore);
             if (victim is null)
                 creature.ChangeState(CarnivoreState.Searching);
             else
                 creature.MoveTo(victim);
         }
 
-        public static GameObject FindClosestHerbivore(CarnivoreBehavior carnivore)
-        {
-            GameObject victim = carnivore.FindClosest("Herbivore");
-            return Vector2.Distance(
-                    carnivore.transform.position,
-                    victim.transform.position)
-                <= carnivore.VisionRadius
-                    ? victim
-                    : null;
-        }
+
     }
 }

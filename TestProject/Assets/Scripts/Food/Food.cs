@@ -1,7 +1,14 @@
-﻿namespace Assets.Scripts.Food
+﻿using UnityEngine;
+
+namespace Assets.Scripts.Food
 {
-    public class Food
+    public class Food : MonoBehaviour
     {
-        
+        public int Capacity;
+
+        void Start()
+        {
+
+        }
     }
 }

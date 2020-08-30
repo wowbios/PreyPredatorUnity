@@ -1,10 +1,16 @@
-﻿namespace Assets.Scripts.Creatures
+﻿using UnityEngine;
+
+namespace Assets.Scripts.Creatures
 {
     public class HerbivoreGoForEatStrategy : IStrategy<HerbivoreBehavior>
     {
-        public void Apply(HerbivoreBehavior creature)
+        public void Apply(HerbivoreBehavior herbivore)
         {
-            throw new System.NotImplementedException();
+            GameObject food = herbivore.FindClosest(EntityType.Food);
+            if (food is null)
+                herbivore.ChangeState(HerbivoreState.Searching);
+            else
+                herbivore.MoveTo(food);
         }
     }
 }

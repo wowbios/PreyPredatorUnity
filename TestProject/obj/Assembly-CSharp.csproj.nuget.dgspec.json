@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Project\\Unity\\TestProject\\TestProject\\Assembly-CSharp.csproj": {}
+    "C:\\Project\\Unity\\PreyPredatorUnity\\TestProject\\Assembly-CSharp.csproj": {}
   },
   "projects": {
-    "C:\\Project\\Unity\\TestProject\\TestProject\\Assembly-CSharp.csproj": {
+    "C:\\Project\\Unity\\PreyPredatorUnity\\TestProject\\Assembly-CSharp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Project\\Unity\\TestProject\\TestProject\\Assembly-CSharp.csproj",
+        "projectUniqueName": "C:\\Project\\Unity\\PreyPredatorUnity\\TestProject\\Assembly-CSharp.csproj",
         "projectName": "Assembly-CSharp",
-        "projectPath": "C:\\Project\\Unity\\TestProject\\TestProject\\Assembly-CSharp.csproj",
+        "projectPath": "C:\\Project\\Unity\\PreyPredatorUnity\\TestProject\\Assembly-CSharp.csproj",
         "packagesPath": "C:\\Users\\a.vyushkov\\.nuget\\packages\\",
-        "outputPath": "C:\\Project\\Unity\\TestProject\\TestProject\\obj\\",
+        "outputPath": "C:\\Project\\Unity\\PreyPredatorUnity\\TestProject\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "configFilePaths": [
